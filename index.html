@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jayath Premasinghe | The Data Story</title>
+  <meta name="description" content="Jayath Premasinghe — Data Analytics & Institutional Research. Python, SQL, Power BI. Narrative-driven portfolio with projects and impact." />
+  <meta name="theme-color" content="#ffffff" />
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#1d1d1f;
+      --muted:#6e6e73;
+      --accent:#0066cc;
+      --secondary:#f5f5f7;
+      --border:#d2d2d7;
+      --card:#ffffff;
+      --shadow: 0 10px 30px rgba(0,0,0,.06);
+      --radius: 16px;
+    }
+
+    [data-theme="dark"]{
+      --bg:#000000;
+      --text:#f5f5f7;
+      --muted:#a1a1a6;
+      --accent:#2997ff;
+      --secondary:#1c1c1e;
+      --border:#38383a;
+      --card:#0b0b0c;
+      --shadow: 0 12px 36px rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.55;
+      margin: 0;
+      transition: background .25s ease, color .25s ease;
+    }
+
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    .container{
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* Top bar */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: saturate(160%) blur(14px);
+      -webkit-backdrop-filter: saturate(160%) blur(14px);
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+    }
+    .topbar-inner{
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 200px;
+    }
+    .brand-dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent);
+    }
+    .brand-title{
+      font-weight: 650;
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .top-actions{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .btn{
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--secondary);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: transform .12s ease, background .2s ease, border-color .2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+    }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn.primary{
+      background: var(--accent);
+      color: white;
+      border-color: color-mix(in srgb, var(--accent) 80%, black);
+      text-decoration: none;
+    }
+    .btn.primary:hover{ text-decoration: none; }
+    .btn:focus-visible{
+      outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      outline-offset: 2px;
+    }
+
+    /* Hero */
+    header{
+      text-align: center;
+      padding: 50px 0 24px;
+    }
+
+    .profile-wrap{
+      width: 152px;
+      height: 152px;
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #2d9cff, #00d4ff);
+      box-shadow: var(--shadow);
+      border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    }
+    .profile-wrap img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .profile-fallback{
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      letter-spacing: .6px;
+      color: rgba(255,255,255,.92);
+      font-size: 22px;
+    }
+
+    h1{
+      font-size: clamp(30px, 5vw, 44px);
+      font-weight: 750;
+      margin: 0 0 10px;
+      letter-spacing: -0.6px;
+    }
+    .tagline{
+      color: var(--accent);
+      font-weight: 650;
+      font-size: 18px;
+      margin: 0 0 10px;
+    }
+    .summary{
+      max-width: 720px;
+      margin: 0 auto 18px;
+      color: var(--muted);
+      font-size: 14.5px;
+    }
+
+    .chips{
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 14px 0 0;
+    }
+    .chip{
+      font-size: 12px;
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--secondary) 75%, transparent);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .hero-links{
+      margin-top: 14px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .hero-links span.sep{ color: var(--border); font-weight: 400; }
+
+    /* Cards / Sections */
+    .stack{
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .section-header{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 18px;
+      background: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--card) 92%, transparent),
+        color-mix(in srgb, var(--card) 100%, transparent)
+      );
+      border: 0;
+      cursor: pointer;
+      color: var(--text);
+      text-align: left;
+    }
+    .section-header:hover .section-title{ color: var(--accent); }
+    .section-title{
+      margin: 0;
+      font-size: 18px;
+      font-weight: 720;
+      letter-spacing: -.2px;
+      transition: color .15s ease;
+    }
+    .section-meta{
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+    .title-wrap{
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chevron{
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border);
+      background: var(--secondary);
+      flex: 0 0 auto;
+      transition: transform .25s ease;
+      font-size: 14px;
+      line-height: 1;
+    }
+    .section-header[aria-expanded="true"] .chevron{
+      transform: rotate(180deg);
+    }
+
+    .content{
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease;
+    }
+    .content-inner{
+      padding: 0 18px 18px;
+      color: var(--muted);
+      font-size: 14.5px;
+    }
+
+    .two-col{
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 820px){
+      .two-col{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .block{
+      border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+      background: color-mix(in srgb, var(--secondary) 55%, transparent);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .block h3{
+      margin: 0 0 8px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 720;
+    }
+    .block p{ margin: 0; }
+
+    .list{
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+    .list li{ margin: 6px 0; }
+
+    /* Projects */
+    .project{
+      display: grid;
+      gap: 12px;
+      border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+      background: color-mix(in srgb, var(--secondary) 55%, transparent);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .project-top{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .project h3{
+      margin: 0;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 760;
+      letter-spacing: -.2px;
+    }
+    .project .small{
+      margin: 6px 0 0;
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+    .pill-row{
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .pill{
+      font-size: 11.5px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+    }
+    .proj-links{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    /* Skills grid */
+    .skills-grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 820px){
+      .skills-grid{ grid-template-columns: 1fr 1fr; }
+    }
+    .skill-group{
+      border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+      background: color-mix(in srgb, var(--secondary) 55%, transparent);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .skill-group h3{
+      margin: 0 0 10px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 720;
+    }
+    .skill-lines{
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+    .skill-lines strong{
+      color: var(--text);
+      font-weight: 680;
+    }
+
+    footer{
+      text-align: center;
+      font-size: 12px;
+      color: color-mix(in srgb, var(--muted) 85%, transparent);
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand" aria-label="Site brand">
+        <div class="brand-dot" aria-hidden="true"></div>
+        <div class="brand-title">The Data Story</div>
+      </div>
+
+      <div class="top-actions">
+        <button class="btn" id="themeBtn" type="button" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span aria-hidden="true">🌓</span>
+          <span id="themeLabel">Dark</span>
+        </button>
+
+        <!-- Update these links -->
+        <a class="btn primary" href="assets/Jayath_Premasinghe_Resume.pdf" target="_blank" rel="noopener">
+          <span aria-hidden="true">⬇️</span> Resume
+        </a>
+
+        <a class="btn" href="#contact">
+          <span aria-hidden="true">✉️</span> Contact
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- HERO -->
+    <header>
+      <!-- Replace the src with your real image path. If image fails to load, initials appear. -->
+      <div class="profile-wrap" aria-label="Profile photo">
+        <img src="images/jayath.jpg" alt="Jayath Premasinghe headshot" onerror="this.style.display='none'; document.getElementById('initials').style.display='grid';" />
+        <div class="profile-fallback" id="initials" style="display:none;">JP</div>
+      </div>
+
+      <h1>Jayath Premasinghe</h1>
+      <p class="tagline">Data Analytics • Institutional Research • Decision Support</p>
+
+      <p class="summary">
+        I turn complex institutional and business data into clear decisions — using Python, SQL, and BI dashboards.
+        Currently pursuing an <strong>MS in Data Science (ECU, 2026)</strong> with a foundation in <strong>Finance (MS)</strong> and management.
+        I care about reproducibility, stakeholder clarity, and measurable impact.
+      </p>
+
+      <div class="chips" aria-label="Key skills">
+        <span class="chip">Python</span>
+        <span class="chip">SQL</span>
+        <span class="chip">Power BI</span>
+        <span class="chip">Tableau</span>
+        <span class="chip">Data Cleaning</span>
+        <span class="chip">Dashboards</span>
+        <span class="chip">Statistical Modeling</span>
+      </div>
+
+      <div class="hero-links" aria-label="Profile links">
+        <!-- Update these -->
+        <a href="https://linkedin.com/in/jayath/" target="_blank" rel="noopener">LinkedIn</a>
+        <span class="sep">•</span>
+        <a href="https://github.com/your-github" target="_blank" rel="noopener">GitHub</a>
+        <span class="sep">•</span>
+        <a href="#projects">Projects</a>
+        <span class="sep">•</span>
+        <a href="#experience">Experience</a>
+        <span class="sep">•</span>
+        <a href="#education">Education</a>
+      </div>
+    </header>
+
+    <!-- SECTIONS -->
+    <div class="stack">
+
+      <!-- BIOGRAPHY -->
+      <section class="card" id="bio">
+        <button class="section-header" type="button"
+          aria-expanded="false" aria-controls="bio-content"
+          onclick="toggleSection('bio-content', this)">
+          <span class="title-wrap">
+            <span class="section-title">Biography</span>
+            <span class="section-meta">A concise narrative + what I do best</span>
+          </span>
+          <span class="chevron" aria-hidden="true">▼</span>
+        </button>
+
+        <div id="bio-content" class="content" role="region" aria-label="Biography content">
+          <div class="content-inner">
+            <div class="two-col">
+              <div class="block">
+                <h3>The Foundation</h3>
+                <p>
+                  My work lives at the intersection of <strong>strategy and data</strong>.
+                  From management and finance to data science, I’ve focused on how institutional decisions affect real outcomes —
+                  enrollment, performance, customer experience, and operational efficiency.
+                </p>
+              </div>
+
+              <div class="block">
+                <h3>What I’m known for</h3>
+                <ul class="list">
+                  <li>Turning messy datasets into trustworthy analysis (cleaning, validation, reproducibility).</li>
+                  <li>Building dashboards and reporting workflows that reduce manual effort.</li>
+                  <li>Explaining results clearly to non-technical stakeholders.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="block" style="margin-top: 14px;">
+              <h3>What I’m looking for</h3>
+              <p>
+                Roles in <strong>Data Analytics</strong>, <strong>Institutional Research</strong>, or <strong>Business Analytics</strong>
+                where I can build automated insights and decision-support systems.
+                <span style="display:block; margin-top:8px;">
+                  <strong>Work authorization:</strong> F-1 / OPT eligible (open to U.S. opportunities).
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section class="card" id="projects">
+        <button class="section-header" type="button"
+          aria-expanded="true" aria-controls="projects-content"
+          onclick="toggleSection('projects-content', this)">
+          <span class="title-wrap">
+            <span class="section-title">Projects</span>
+            <span class="section-meta">Proof of work (replace placeholders with your real links/results)</span>
+          </span>
+          <span class="chevron" aria-hidden="true">▼</span>
+        </button>
+
+        <div id="projects-content" class="content" role="region" aria-label="Projects content" style="max-height: 2000px;">
+          <div class="content-inner">
+
+            <!-- Project 1 -->
+            <div class="project">
+              <div class="project-top">
+                <div>
+                  <h3>Institutional Dashboard (Enrollment & Performance)</h3>
+                  <p class="small">
+                    Built a decision-support dashboard to track KPIs and trends for stakeholders (retention, intake patterns, performance gaps).
+                  </p>
+                </div>
+                <div class="proj-links">
+                  <a class="btn" href="https://github.com/your-github/enrollment-dashboard" target="_blank" rel="noopener">GitHub</a>
+                  <a class="btn" href="#" target="_blank" rel="noopener">Demo</a>
+                </div>
+              </div>
+              <div class="pill-row">
+                <span class="pill">Power BI</span>
+                <span class="pill">SQL</span>
+                <span class="pill">KPI Design</span>
+                <span class="pill">Stakeholder Reporting</span>
+              </div>
+              <ul class="list">
+                <li><strong>Impact:</strong> Reduced manual reporting effort (replace with your metric).</li>
+                <li><strong>Focus:</strong> Cleaned/validated datasets; built reusable measures and a refresh-ready model.</li>
+              </ul>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project">
+              <div class="project-top">
+                <div>
+                  <h3>Research Analytics Automation (Python)</h3>
+                  <p class="small">
+                    Automated data cleaning + summary reporting for high-volume research datasets to improve reproducibility and speed.
+                  </p>
+                </div>
+                <div class="proj-links">
+                  <a class="btn" href="https://github.com/your-github/research-automation" target="_blank" rel="noopener">GitHub</a>
+                  <a class="btn" href="#" target="_blank" rel="noopener">Write-up</a>
+                </div>
+              </div>
+              <div class="pill-row">
+                <span class="pill">Python</span>
+                <span class="pill">Pandas</span>
+                <span class="pill">Validation</span>
+                <span class="pill">Reproducibility</span>
+              </div>
+              <ul class="list">
+                <li><strong>Impact:</strong> Faster turnaround from raw data → insights (replace with your metric).</li>
+                <li><strong>Focus:</strong> Robust ETL, checks for missingness, and consistent outputs for non-technical audiences.</li>
+              </ul>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project">
+              <div class="project-top">
+                <div>
+                  <h3>Computer Vision Metrics Pipeline (Tracking-Based)</h3>
+                  <p class="small">
+                    Built a pipeline to compute motion metrics from microscopy video tracking (e.g., VCL, VSL, VAP, ALH, BCF).
+                  </p>
+                </div>
+                <div class="proj-links">
+                  <a class="btn" href="https://github.com/your-github/cv-tracking-metrics" target="_blank" rel="noopener">GitHub</a>
+                  <a class="btn" href="#" target="_blank" rel="noopener">Poster</a>
+                </div>
+              </div>
+              <div class="pill-row">
+                <span class="pill">Python</span>
+                <span class="pill">Computer Vision</span>
+                <span class="pill">Tracking</span>
+                <span class="pill">Analytics</span>
+              </div>
+              <ul class="list">
+                <li><strong>Impact:</strong> Standardized metrics reporting across videos (replace with your metric).</li>
+                <li><strong>Focus:</strong> Clean outputs, repeatable runs, and interpretable metrics for research stakeholders.</li>
+              </ul>
+            </div>
+
+            <p style="margin-top: 12px; font-size: 13px;">
+              Tip: Replace placeholders with real results + links. Even academic projects look strong when they show a clear problem, approach, and measurable output.
+            </p>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section class="card" id="experience">
+        <button class="section-header" type="button"
+          aria-expanded="false" aria-controls="exp-content"
+          onclick="toggleSection('exp-content', this)">
+          <span class="title-wrap">
+            <span class="section-title">Experience</span>
+            <span class="section-meta">Narrative + outcomes (bullet impact)</span>
+          </span>
+          <span class="chevron" aria-hidden="true">▼</span>
+        </button>
+
+        <div id="exp-content" class="content" role="region" aria-label="Experience content">
+          <div class="content-inner">
+
+            <div class="two-col">
+              <div class="block">
+                <h3>Graduate Research Assistant (ECU)</h3>
+                <ul class="list">
+                  <li>Analyzed complex datasets using statistical methods to identify trends and gaps.</li>
+                  <li>Developed Python scripts to automate reporting and ensure reproducible outputs.</li>
+                  <li>Translated technical findings into visuals and summaries for faculty and stakeholders.</li>
+                </ul>
+              </div>
+
+              <div class="block">
+                <h3>Higher Education Strategy (Sri Lanka)</h3>
+                <ul class="list">
+                  <li>Designed data-informed frameworks to align enrollment targets with growth strategy.</li>
+                  <li>Led market research and program development with revenue and outcome focus.</li>
+                  <li>Bridged operations + leadership to turn insights into institutional decisions.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="block" style="margin-top: 14px;">
+              <h3>How I work</h3>
+              <p>
+                I focus on clarity: define the KPI, validate the data, build repeatable pipelines, and deliver a story that helps stakeholders act.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <section class="card" id="skills">
+        <button class="section-header" type="button"
+          aria-expanded="false" aria-controls="skills-content"
+          onclick="toggleSection('skills-content', this)">
+          <span class="title-wrap">
+            <span class="section-title">Skills & Tools</span>
+            <span class="section-meta">Recruiter-friendly overview</span>
+          </span>
+          <span class="chevron" aria-hidden="true">▼</span>
+        </button>
+
+        <div id="skills-content" class="content" role="region" aria-label="Skills content">
+          <div class="content-inner">
+            <div class="skills-grid">
+              <div class="skill-group">
+                <h3>Analytics & Data</h3>
+                <div class="skill-lines">
+                  <div><strong>Core:</strong> EDA, data cleaning, validation, reproducibility</div>
+                  <div><strong>Methods:</strong> statistical analysis, KPI design, trend analysis</div>
+                  <div><strong>Workflow:</strong> reporting automation, stakeholder-ready outputs</div>
+                </div>
+              </div>
+
+              <div class="skill-group">
+                <h3>Technical Stack</h3>
+                <div class="skill-lines">
+                  <div><strong>Languages:</strong> Python, SQL (add R if applicable)</div>
+                  <div><strong>BI:</strong> Power BI, Tableau</div>
+                  <div><strong>Tools:</strong> Git/GitHub, Excel (add cloud/DB you truly use)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDUCATION -->
+      <section class="card" id="education">
+        <button class="section-header" type="button"
+          aria-expanded="false" aria-controls="edu-content"
+          onclick="toggleSection('edu-content', this)">
+          <span class="title-wrap">
+            <span class="section-title">Education</span>
+            <span class="section-meta">Credentials (keep clean and verified)</span>
+          </span>
+          <span class="chevron" aria-hidden="true">▼</span>
+        </button>
+
+        <div id="edu-content" class="content" role="region" aria-label="Education content">
+          <div class="content-inner">
+            <div class="block">
+              <p style="margin:0 0 10px;">
+                <strong>MS in Data Science</strong> | East Carolina University <span style="color:var(--muted)">(Expected 2026)</span>
+              </p>
+              <p style="margin:0 0 10px;">
+                <strong>MS in Finance</strong> | University of New Orleans <span style="color:var(--muted)">(2024)</span>
+              </p>
+              <p style="margin:0;">
+                <strong>BS in Management</strong> | University College Dublin <span style="color:var(--muted)">(2015)</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="card" id="contact">
+        <button class="section-header" type="button"
+          aria-expanded="true" aria-controls="contact-content"
+          onclick="toggleSection('contact-content', this)">
+          <span class="title-wrap">
+            <span class="section-title">Contact</span>
+            <span class="section-meta">Make it easy to reach you</span>
+          </span>
+          <span class="chevron" aria-hidden="true">▼</span>
+        </button>
+
+        <div id="contact-content" class="content" role="region" aria-label="Contact content" style="max-height: 2000px;">
+          <div class="content-inner">
+            <div class="two-col">
+              <div class="block">
+                <h3>Email</h3>
+                <p>
+                  <a href="mailto:your-email@example.com">your-email@example.com</a><br />
+                  <span style="font-size:12.5px; color:var(--muted);">
+                    Replace with your real email
+                  </span>
+                </p>
+              </div>
+              <div class="block">
+                <h3>Links</h3>
+                <p style="margin:0;">
+                  <a href="https://linkedin.com/in/jayath/" target="_blank" rel="noopener">LinkedIn</a><br />
+                  <a href="https://github.com/your-github" target="_blank" rel="noopener">GitHub</a><br />
+                  <a href="assets/Jayath_Premasinghe_Resume.pdf" target="_blank" rel="noopener">Resume PDF</a>
+                </p>
+              </div>
+            </div>
+
+            <div class="block" style="margin-top:14px;">
+              <h3>Quick note</h3>
+              <p>
+                If you’re reaching out about analytics, institutional research, or dashboard work, include the problem you’re trying to solve —
+                I respond fastest when I can understand the goal and the data context.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <footer>
+      Built with a focus on narrative and data. • © <span id="year"></span> Jayath Premasinghe
+    </footer>
+  </div>
+
+  <script>
+    // ---- Theme: persist across refresh ----
+    (function initTheme() {
+      const saved = localStorage.getItem("theme");
+      const initial = saved || "light";
+      document.body.setAttribute("data-theme", initial);
+      setThemeLabel(initial);
+    })();
+
+    function setThemeLabel(theme) {
+      const label = document.getElementById("themeLabel");
+      if (!label) return;
+      label.textContent = theme === "dark" ? "Light" : "Dark";
+      document.querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", theme === "dark" ? "#000000" : "#ffffff");
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const current = body.getAttribute("data-theme") || "light";
+      const next = current === "dark" ? "light" : "dark";
+      body.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+      setThemeLabel(next);
+    }
+
+    // ---- Accordion: accessible buttons with keyboard support ----
+    function toggleSection(id, headerBtn) {
+      const panel = document.getElementById(id);
+      if (!panel) return;
+
+      const isOpen = headerBtn.getAttribute("aria-expanded") === "true";
+      headerBtn.setAttribute("aria-expanded", String(!isOpen));
+
+      if (!isOpen) {
+        // open: set to scrollHeight for smooth transition
+        panel.style.maxHeight = panel.scrollHeight + "px";
+        // also re-measure after images load (if any)
+        setTimeout(() => {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }, 150);
+      } else {
+        // close
+        panel.style.maxHeight = "0px";
+      }
+    }
+
+    // Ensure panels that are "default open" have correct height
+    window.addEventListener("load", () => {
+      document.querySelectorAll('.section-header[aria-expanded="true"]').forEach(btn => {
+        const id = btn.getAttribute("aria-controls");
+        const panel = document.getElementById(id);
+        if (panel) panel.style.maxHeight = panel.scrollHeight + "px";
+      });
+    });
+
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
